@@ -22,6 +22,9 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+
 class CourseSkillTitleResource extends Resource
 {
     protected static ?string $model = CourseSkillTitle::class;
@@ -75,12 +78,11 @@ class CourseSkillTitleResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Action::make('Manage course content')
                     ->color('success')
                     ->icon('heroicon-m-academic-cap')
-                    ->url(fn(CourseSkillTitle $record): string => self::getUrl('lessons.index', [
+                    ->url(fn (CourseSkillTitle $record): string => self::getUrl('lessons.index', [
                         'parent' => $record->id,
                     ])),
             ])
@@ -91,10 +93,20 @@ class CourseSkillTitleResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('course_title'),
+                Infolists\Components\TextEntry::make('skill_name')
+                    ->columnSpanFull(),
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\LessonsRelationManager::class,
         ];
     }
 
