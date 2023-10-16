@@ -7,6 +7,7 @@ use App\Filament\Resources\CourseSkillTitleResource\RelationManagers;
 use App\Filament\Resources\LessonResource\Pages\CreateLesson;
 use App\Filament\Resources\LessonResource\Pages\EditLesson;
 use App\Filament\Resources\LessonResource\Pages\ListLessons;
+use App\Filament\Resources\LessonResource\Pages\ViewLesson;
 use App\Models\CourseSkillTitle;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -74,6 +75,7 @@ class CourseSkillTitleResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Action::make('Manage course content')
                     ->color('success')
@@ -102,11 +104,13 @@ class CourseSkillTitleResource extends Resource
             'index' => Pages\ListCourseSkillTitles::route('/'),
             'create' => Pages\CreateCourseSkillTitle::route('/create'),
             'edit' => Pages\EditCourseSkillTitle::route('/{record}/edit'),
+            'view' => Pages\ViewCourse::route('/{record}'),
 
             // Lessons 
             'lessons.index' => ListLessons::route('/{parent}/lessons'),
             'lessons.create' => CreateLesson::route('/{parent}/lessons/create'),
             'lessons.edit' => EditLesson::route('/{parent}/lessons/{record}/edit'),
+            'lessons.view' => ViewLesson::route('/{parent}/lessons/{record}'),
         ];
     }
 
