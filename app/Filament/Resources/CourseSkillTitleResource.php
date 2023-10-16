@@ -61,8 +61,6 @@ class CourseSkillTitleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('course_title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('skill_name')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -77,7 +75,7 @@ class CourseSkillTitleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Action::make('Manage lessons')
+                Action::make('Manage course content')
                     ->color('success')
                     ->icon('heroicon-m-academic-cap')
                     ->url(fn(CourseSkillTitle $record): string => self::getUrl('lessons.index', [

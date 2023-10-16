@@ -65,7 +65,9 @@ class LessonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\VideosRelationManager::class,
+            RelationManagers\ActivitiesRelationManager::class,
+            RelationManagers\ExercisesRelationManager::class,
         ];
     }
 
