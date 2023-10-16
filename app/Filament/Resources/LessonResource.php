@@ -6,27 +6,30 @@ use App\Filament\Resources\LessonResource\Pages;
 use App\Filament\Resources\LessonResource\RelationManagers;
 use App\Models\Lesson;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class LessonResource extends Resource
 {
     protected static ?string $model = Lesson::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static bool $shouldRegisterNavigation = false;
+
+    public static function getRecordTitle(?Model $record): string|null|Htmlable
+    {
+        return $record->lesson_title;
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('course_skill_title_id')
-                    ->relationship('courseSkillTitle', 'id')
-                    ->required(),
-                Forms\Components\TextInput::make('lesson_title')
+                TextInput::make('lesson_title')
                     ->required()
                     ->maxLength(100),
             ]);
@@ -36,9 +39,6 @@ class LessonResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('courseSkillTitle.id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('lesson_title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -54,7 +54,6 @@ class LessonResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -69,7 +68,7 @@ class LessonResource extends Resource
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -77,5 +76,5 @@ class LessonResource extends Resource
             'create' => Pages\CreateLesson::route('/create'),
             'edit' => Pages\EditLesson::route('/{record}/edit'),
         ];
-    }    
+    }
 }
