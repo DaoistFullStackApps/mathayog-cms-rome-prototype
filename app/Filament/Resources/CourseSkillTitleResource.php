@@ -11,6 +11,7 @@ use App\Filament\Resources\LessonResource\Pages\ViewLesson;
 use App\Models\CourseSkillTitle;
 use Filament\Facades\Filament;
 use Filament\Forms;
+
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -18,11 +19,14 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 
 use Filament\Infolists;
+use Filament\Infolists\Components\Group;
+use Filament\Infolists\Components\Section;
 use Filament\Infolists\Infolist;
 
 class CourseSkillTitleResource extends Resource
@@ -97,9 +101,14 @@ class CourseSkillTitleResource extends Resource
     {
         return $infolist
             ->schema([
-                Infolists\Components\TextEntry::make('course_title'),
-                Infolists\Components\TextEntry::make('skill_name')
-                    ->columnSpanFull(),
+                Section::make('Course')
+                    ->schema([
+                        Group::make([
+                            Infolists\Components\TextEntry::make('course_title'),
+                            Infolists\Components\TextEntry::make('skill_name'),
+                        ]),
+                    ])
+                    ->collapsible(),
             ]);
     }
 

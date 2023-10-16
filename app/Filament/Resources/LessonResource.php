@@ -14,6 +14,11 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 
+use Filament\Infolists;
+use Filament\Infolists\Components\Group;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
+
 class LessonResource extends Resource
 {
     protected static ?string $model = Lesson::class;
@@ -54,15 +59,29 @@ class LessonResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-            ])
+            ->actions([])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
-    
+
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Lesson Title')
+                    ->schema([
+                        Group::make([
+                            Infolists\Components\TextEntry::make('lesson_title')
+                                ->hiddenLabel(),
+                        ]),
+                    ])->compact(),
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
