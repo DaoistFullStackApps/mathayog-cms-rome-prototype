@@ -26,7 +26,8 @@ class VideosRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\Textarea::make('video_description')
                     ->required()
-                    ->autosize(),
+                    ->autosize()
+                    ->columnSpan('full'),
             ]);
     }
 

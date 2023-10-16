@@ -20,10 +20,12 @@ class ActivitiesRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('activity_title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan('full'),
                 Forms\Components\Textarea::make('objective')
                     ->required()
-                    ->autosize(),
+                    ->autosize()
+                    ->columnSpan('full'),
             ]);
     }
 

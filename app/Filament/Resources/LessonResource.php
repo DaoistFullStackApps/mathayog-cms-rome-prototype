@@ -31,7 +31,8 @@ class LessonResource extends Resource
             ->schema([
                 TextInput::make('lesson_title')
                     ->required()
-                    ->maxLength(100),
+                    ->maxLength(100)
+                    ->columnSpan('full'),
             ]);
     }
 
